@@ -20,14 +20,9 @@ along with an example usage in a Flutter app.
 ## Example
 Check out the [example](https://github.com/AniketDKanade/image_crafter.git)
 
-## Installation
 
-Add this to your `pubspec.yaml` file:
+## Configuration
 
-```yaml
-dependencies:
-  image_crafter: ^1.0.0
-```
 ### iOS
 
 Starting with version **0.8.1** the iOS implementation uses PHPicker to pick
@@ -90,4 +85,4 @@ File? image = await ImageUtility.imageFromGallery(imageQuality: 60);
 File? image= await ImageUtility.imageFromCamera(imageQuality: 60 );
 
 ```
-# image_crafter
+

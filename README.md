@@ -99,4 +99,5 @@ File? image = await ImageUtility.imageFromGallery(imageQuality: 60);
 File? image= await ImageUtility.imageFromCamera(imageQuality: 60 );
 
 ```
-
+## Contributor
+- Aniket kanade ([ZingWorks LLP](https://zingworks.in/))

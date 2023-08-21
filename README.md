@@ -1,6 +1,6 @@
 
 # image_crafter
-[![Pub Version](https://img.shields.io/pub/v/image_crafter)]
+[![Pub Version](https://img.shields.io/pub/v/image_crafter)](https://pub.dev/packages/image_crafter)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 # Introduction

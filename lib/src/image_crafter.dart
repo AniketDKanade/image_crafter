@@ -12,24 +12,22 @@ import 'package:permission_handler/permission_handler.dart';
 
 class ImageUtility {
 
+
   static Future<File?> imageFromGallery ({required int imageQuality}){
-    var image = selectAndCropImage(imageSource: ImageSource.gallery, imageQuality: imageQuality);
+    var image = selectAndCropImage(imageSource: ImageSource.gallery, imageQuality: imageQuality, );
     return image;
   }
 
-  static Future<File?> imageFromCamera ({required int imageQuality}){
-    var image = selectAndCropImage(imageSource: ImageSource.camera, imageQuality: imageQuality);
+  static Future<File?> imageFromCamera ({required int imageQuality,}){
+    var image = selectAndCropImage(imageSource: ImageSource.camera, imageQuality: imageQuality,);
     return image;
   }
 
-  static Future<File?> selectAndCropImage({required ImageSource imageSource,required int imageQuality }) async {
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
-    ].request();
-    if (statuses[Permission.camera]!.isGranted || Platform.isIOS) {
+  static Future<File?> selectAndCropImage({required ImageSource imageSource,required int imageQuality,}) async {
+   var permissionStatus = await checkPermission();
+    if (permissionStatus || Platform.isIOS) {
       final picker = ImagePicker();
       final pickedImage = await picker.pickImage(source: imageSource);
-
       if (pickedImage != null) {
         XFile? finalImage = await cropImage(image: pickedImage, imageQuality: imageQuality);
         return File(finalImage!.path);
@@ -39,6 +37,13 @@ class ImageUtility {
       debugPrint('no permission provided');
     }
     return null;
+  }
+
+  static Future<bool> checkPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+    Permission.camera,
+    ].request();
+    return statuses[Permission.camera]?.isGranted ?? false;
   }
 
   static Future<XFile?> cropImage(
@@ -119,4 +124,5 @@ class ImageUtility {
     }
     return null;
   }
+
 }

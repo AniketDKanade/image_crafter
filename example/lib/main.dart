@@ -63,11 +63,11 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 20.0,),
             ElevatedButton(onPressed: ()  async {
-              File? image = await ImageUtility.imageFromGallery(imageQuality: 60);
-              setState(() {
-                debugPrint("is image load to this1 ");
-                _image = image;
-              });
+                File? image = await ImageUtility.imageFromGallery(imageQuality: 60,);
+                setState(() {
+                  debugPrint("is image load to this1 ");
+                  _image = image;
+                });
               if (kDebugMode) {
                 if(_image != null){
                   print("Gallery path ${_image!.path}");
@@ -76,11 +76,13 @@ class _HomePageState extends State<HomePage> {
             }, child: const Text('Pick Image from Gallery')),
             const SizedBox(height: 30,),
             ElevatedButton(onPressed: () async {
-              File? image= await ImageUtility.imageFromCamera(imageQuality: 60 );
-              setState(() {
-                debugPrint("is image load to this2 ");
-                _image = image;
-              });
+
+
+                File? image= await ImageUtility.imageFromCamera(imageQuality: 60 );
+                setState(() {
+                  debugPrint("is image load to this2 ");
+                  _image = image;
+                });
               if (kDebugMode) {
                 if(_image != null){
                   print("Camera path ${_image!.path}");

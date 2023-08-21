@@ -1,6 +1,6 @@
 
 # image_crafter
-[![Pub Version](https://img.shields.io/pub/v/image_crafter)](https://pub.dev/packages/image_crafter)
+[![Pub Version](https://img.shields.io/pub/v/image_crafter)]
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 # Introduction
@@ -78,8 +78,22 @@ In the **android/app/src/main/AndroidManifest.xml** add:
 `````
 
 ## Usage
-### The 'image_picker' package is required to specify the image source
+### You can check permission status 
+
+
 ```dart
+var permissionStatus = await ImageUtility.checkPermission();
+ if(permissionStatus ){
+ //
+ }else{
+ //Navigate to setting 
+ }
+```
+
+
+
+```dart
+
 File? image = await ImageUtility.imageFromGallery(imageQuality: 60);
 
 File? image= await ImageUtility.imageFromCamera(imageQuality: 60 );

@@ -1,7 +1,7 @@
 name: image_crafter
 description: A Dart package that provides utility functions for selecting, cropping, and processing images,
   along with an example usage in a Flutter app.
-version: 0.0.2
+version: 0.0.4
 homepage: https://github.com/AniketDKanade/image_crafter.git
 
 environment:

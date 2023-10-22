@@ -75,12 +75,10 @@ class _HomePageState extends State<HomePage> {
                   File? image = await ImageUtility.imageFromGallery(
                     imageQuality: 60, aspectRatioPresetsForAndroid: [
                       CustomAspectRatio.square,
-                      CustomAspectRatio.ratio7x5
-
                   ], aspectRatioPresetsForIos: [
                     CustomAspectRatio.square,
-                    CustomAspectRatio.ratio7x5
                   ],
+                    lockAspectRatio: true
                   );
                   setState(() {
                     debugPrint("is image load to this1 ");
@@ -101,11 +99,10 @@ class _HomePageState extends State<HomePage> {
                   File? image =
                       await ImageUtility.imageFromCamera(imageQuality: 60, aspectRatioPresetsForAndroid: [
                         CustomAspectRatio.square,
-                        CustomAspectRatio.ratio3x2
                       ], aspectRatioPresetsForIos: [
                         CustomAspectRatio.square,
-                        CustomAspectRatio.ratio3x2
-                      ]);
+                      ],
+                      lockAspectRatio: true);
                   setState(() {
                     debugPrint("is image load to this2 ");
                     _image = image;

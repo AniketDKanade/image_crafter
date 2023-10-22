@@ -25,15 +25,24 @@ class ImageUtility {
   /// The [imageQuality] parameter determines the quality of the compressed image.List<CustomAspectRatio> customAspectRatios,
   ///
   /// Returns a [File] representing the compressed image, or `null` if no image was selected.
-  static Future<File?> imageFromGallery({required int imageQuality,required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
-    required List<CustomAspectRatio> aspectRatioPresetsForIos ,String? toolbarTitle,
+  static Future<File?> imageFromGallery({
+    required int imageQuality,
+    required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
+    required List<CustomAspectRatio> aspectRatioPresetsForIos,
+    String? toolbarTitle,
     Color? toolbarColor,
     Color? toolbarWidgetColor,
-    bool? lockAspectRatio,}) {
+    bool? lockAspectRatio,
+  }) {
     return selectAndCropImage(
       imageSource: ImageSource.gallery,
-      imageQuality: imageQuality, aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid, aspectRatioPresetsForIos: aspectRatioPresetsForIos,
-
+      imageQuality: imageQuality,
+      aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid,
+      aspectRatioPresetsForIos: aspectRatioPresetsForIos,
+      toolbarWidgetColor:toolbarWidgetColor ,
+      toolbarTitle: toolbarTitle,
+      toolbarColor: toolbarColor,
+      lockAspectRatio:lockAspectRatio ,
     );
   }
 
@@ -42,14 +51,24 @@ class ImageUtility {
   /// The [imageQuality] parameter determines the quality of the compressed image.
   ///
   /// Returns a [File] representing the compressed image, or `null` if no image was captured.
-  static Future<File?> imageFromCamera({required int imageQuality,required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
-    required List<CustomAspectRatio> aspectRatioPresetsForIos,String? toolbarTitle,
+  static Future<File?> imageFromCamera({
+    required int imageQuality,
+    required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
+    required List<CustomAspectRatio> aspectRatioPresetsForIos,
+    String? toolbarTitle,
     Color? toolbarColor,
     Color? toolbarWidgetColor,
-    bool? lockAspectRatio,}) {
+    bool? lockAspectRatio,
+  }) {
     return selectAndCropImage(
       imageSource: ImageSource.camera,
-      imageQuality: imageQuality, aspectRatioPresetsForAndroid:aspectRatioPresetsForAndroid, aspectRatioPresetsForIos: aspectRatioPresetsForIos,
+      imageQuality: imageQuality,
+      aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid,
+      aspectRatioPresetsForIos: aspectRatioPresetsForIos,
+      toolbarColor:toolbarColor ,
+      toolbarTitle: toolbarTitle,
+      toolbarWidgetColor:toolbarWidgetColor ,
+      lockAspectRatio:lockAspectRatio ,
     );
   }
 
@@ -78,13 +97,13 @@ class ImageUtility {
       if (pickedImage != null) {
         XFile? finalImage = await cropImage(
           toolbarColor: toolbarColor,
-          toolbarWidgetColor:toolbarWidgetColor ,
-          lockAspectRatio:lockAspectRatio ,
-          toolbarTitle:toolbarTitle ,
-
-
+          toolbarWidgetColor: toolbarWidgetColor,
+          lockAspectRatio: lockAspectRatio,
+          toolbarTitle: toolbarTitle,
           image: pickedImage,
-          imageQuality: imageQuality, aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid, aspectRatioPresetsForIos: aspectRatioPresetsForIos,
+          imageQuality: imageQuality,
+          aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid,
+          aspectRatioPresetsForIos: aspectRatioPresetsForIos,
         );
         return File(finalImage!.path);
       }
@@ -103,25 +122,23 @@ class ImageUtility {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
     ].request();
-
     return statuses[Permission.camera]?.isGranted ?? false;
   }
 
   /// Crops the selected image to a specified aspect ratio and quality.
   ///
   /// Returns a [File] representing the cropped image.
-  static Future<XFile?> cropImage({
-    required XFile image,
-    required int imageQuality,
-    required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
-    required List<CustomAspectRatio> aspectRatioPresetsForIos,
-    String? toolbarTitle,
-    Color? toolbarColor,
-    Color? toolbarWidgetColor,
-    bool? lockAspectRatio
-  }) async {
-
-    final finalAspectRatioPresetsForAndroid = aspectRatioPresetsForAndroid.map((customAspectRatio) {
+  static Future<XFile?> cropImage(
+      {required XFile image,
+      required int imageQuality,
+      required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
+      required List<CustomAspectRatio> aspectRatioPresetsForIos,
+      String? toolbarTitle,
+      Color? toolbarColor,
+      Color? toolbarWidgetColor,
+      bool? lockAspectRatio}) async {
+    final finalAspectRatioPresetsForAndroid =
+        aspectRatioPresetsForAndroid.map((customAspectRatio) {
       CropAspectRatioPreset? cropAspectRatioPreset;
 
       // Map the custom enum to the CropAspectRatioPreset
@@ -148,7 +165,8 @@ class ImageUtility {
       return cropAspectRatioPreset;
     }).toList();
 
-    final finalAspectRatioPresetsForIos = aspectRatioPresetsForIos.map((customAspectRatio) {
+    final finalAspectRatioPresetsForIos =
+        aspectRatioPresetsForIos.map((customAspectRatio) {
       CropAspectRatioPreset? cropAspectRatioPreset;
 
       // Map the custom enum to the CropAspectRatioPreset
@@ -175,7 +193,6 @@ class ImageUtility {
 
       return cropAspectRatioPreset;
     }).toList();
-
 
     CroppedFile? croppedFile = await ImageCropper().cropImage(
       sourcePath: image.path,
@@ -184,16 +201,15 @@ class ImageUtility {
           : finalAspectRatioPresetsForIos,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: toolbarTitle?? 'Image Cropper',
-          toolbarColor: toolbarColor??Colors.deepOrange,
-          toolbarWidgetColor:toolbarWidgetColor?? Colors.white,
+          toolbarTitle: toolbarTitle ?? 'Image Cropper',
+          toolbarColor: toolbarColor ?? Colors.deepOrange,
+          toolbarWidgetColor: toolbarWidgetColor ?? Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: lockAspectRatio?? false,
+          lockAspectRatio: lockAspectRatio ?? false,
         ),
         IOSUiSettings(
-          title: toolbarTitle ?? 'Image Cropper',
-          aspectRatioLockEnabled: lockAspectRatio ?? false
-        ),
+            title: toolbarTitle ?? 'Image Cropper',
+            aspectRatioLockEnabled: lockAspectRatio ?? false),
       ],
     );
 

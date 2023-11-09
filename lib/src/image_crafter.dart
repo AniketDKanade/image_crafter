@@ -33,8 +33,12 @@ class ImageUtility {
     Color? toolbarColor,
     Color? toolbarWidgetColor,
     bool? lockAspectRatio,
+    double? ratioX,
+    double? ratioY,
   }) {
     return selectAndCropImage(
+      ratioX:ratioX ,
+      ratioY:ratioY ,
       imageSource: ImageSource.gallery,
       imageQuality: imageQuality,
       aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid,
@@ -59,8 +63,12 @@ class ImageUtility {
     Color? toolbarColor,
     Color? toolbarWidgetColor,
     bool? lockAspectRatio,
+    double? ratioX,
+    double? ratioY,
   }) {
     return selectAndCropImage(
+      ratioX: ratioX,
+      ratioY: ratioY,
       imageSource: ImageSource.camera,
       imageQuality: imageQuality,
       aspectRatioPresetsForAndroid: aspectRatioPresetsForAndroid,
@@ -83,6 +91,8 @@ class ImageUtility {
     Color? toolbarColor,
     Color? toolbarWidgetColor,
     bool? lockAspectRatio,
+    double? ratioX,
+    double? ratioY,
     required ImageSource imageSource,
     required int imageQuality,
     required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
@@ -96,6 +106,8 @@ class ImageUtility {
 
       if (pickedImage != null) {
         XFile? finalImage = await cropImage(
+          ratioX:ratioX ,
+          ratioY:ratioY ,
           toolbarColor: toolbarColor,
           toolbarWidgetColor: toolbarWidgetColor,
           lockAspectRatio: lockAspectRatio,
@@ -133,6 +145,8 @@ class ImageUtility {
       required int imageQuality,
       required List<CustomAspectRatio> aspectRatioPresetsForAndroid,
       required List<CustomAspectRatio> aspectRatioPresetsForIos,
+        double? ratioX,
+        double? ratioY,
       String? toolbarTitle,
       Color? toolbarColor,
       Color? toolbarWidgetColor,
@@ -199,6 +213,7 @@ class ImageUtility {
       aspectRatioPresets: Platform.isAndroid
           ? finalAspectRatioPresetsForAndroid
           : finalAspectRatioPresetsForIos,
+      aspectRatio: (ratioX != null && ratioY != null)? CropAspectRatio(ratioX: ratioX, ratioY: ratioY):null,
       uiSettings: [
         AndroidUiSettings(
           toolbarTitle: toolbarTitle ?? 'Image Cropper',
